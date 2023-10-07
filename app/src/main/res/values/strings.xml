@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Blood Pressure Note</string>
+    <string name="systolic_blood_pressure">Systolic blood pressure</string>
+    <string name="diastolic_blood_pressure">Diastolic Pressure Note</string>
+    <string name="heart_rate">Heart Rate</string>
+    <string name="save_button">Save</string>
+    <string name="note">Note</string>
+    <string name="error_not_number">Please input value as number</string>
 </resources>

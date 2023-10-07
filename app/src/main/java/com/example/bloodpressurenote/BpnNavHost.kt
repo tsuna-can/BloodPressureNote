@@ -6,7 +6,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.bloodpressurenote.components.screens.InputScreen
+import com.example.bloodpressurenote.components.screens.InputScreen.InputScreen
 import com.example.bloodpressurenote.components.screens.StatisticsScreen
 
 @Composable
