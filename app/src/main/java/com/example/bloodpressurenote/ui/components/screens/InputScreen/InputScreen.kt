@@ -1,28 +1,32 @@
-package com.example.bloodpressurenote.components.screens.InputScreen
+package com.example.bloodpressurenote.ui.components.screens.InputScreen
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bloodpressurenote.R
+import com.example.bloodpressurenote.ui.components.TextField
 
 @Composable
 fun InputScreen(
     message: String,
     viewModel: InputScreenViewModel = viewModel(),
 ) {
+    val focusManager = LocalFocusManager.current
+
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -35,8 +39,8 @@ fun InputScreen(
 
         Text(text = message)
 
-        OutlinedTextField(
-            label = { Text(stringResource(id = R.string.systolic_blood_pressure)) },
+        TextField(
+            label = stringResource(id = R.string.systolic_blood_pressure),
             value = bloodPressureDetails.systolicBloodPressure,
             onValueChange = {
                 viewModel.updateUiState(
@@ -45,14 +49,14 @@ fun InputScreen(
                     )
                 )
             },
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            isError = inputUiState.isSystolicBloodPressureValid.isNotBlank()
+            isError = !inputUiState.isSystolicBloodPressureValid,
+            keyboardType = KeyboardType.Number,
+            errorMessage = stringResource(id = R.string.error_not_number),
+            focusManager = focusManager,
         )
 
-        OutlinedTextField(
-            label = { Text(stringResource(id = R.string.diastolic_blood_pressure)) },
+        TextField(
+            label = stringResource(id = R.string.diastolic_blood_pressure),
             value = bloodPressureDetails.diastolicBloodPressure,
             onValueChange = {
                 viewModel.updateUiState(
@@ -61,13 +65,14 @@ fun InputScreen(
                     )
                 )
             },
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
+            isError = !inputUiState.isDiastolicBloodPressureValid,
+            keyboardType = KeyboardType.Number,
+            errorMessage = stringResource(id = R.string.error_not_number),
+            focusManager = focusManager,
         )
 
-        OutlinedTextField(
-            label = { Text(stringResource(id = R.string.heart_rate)) },
+        TextField(
+            label = stringResource(id = R.string.heart_rate),
             value = bloodPressureDetails.heartRate,
             onValueChange = {
                 viewModel.updateUiState(
@@ -76,13 +81,14 @@ fun InputScreen(
                     )
                 )
             },
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
+            isError = !inputUiState.isHeartRateValid,
+            keyboardType = KeyboardType.Number,
+            errorMessage = stringResource(id = R.string.error_not_number),
+            focusManager = focusManager
         )
 
-        OutlinedTextField(
-            label = { Text(stringResource(id = R.string.note)) },
+        TextField(
+            label = stringResource(id = R.string.note),
             value = bloodPressureDetails.note,
             onValueChange = {
                 viewModel.updateUiState(
@@ -91,16 +97,16 @@ fun InputScreen(
                     )
                 )
             },
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
             maxLines = 3,
             singleLine = false,
+            focusManager = focusManager
         )
 
         Button(
             onClick = {},
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .padding(16.dp),
+            enabled = inputUiState.enableSave
         ) {
             Text(stringResource(id = R.string.save_button))
         }

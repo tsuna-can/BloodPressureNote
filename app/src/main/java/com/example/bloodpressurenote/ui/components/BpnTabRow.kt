@@ -1,4 +1,4 @@
-package com.example.bloodpressurenote.components
+package com.example.bloodpressurenote.ui.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize

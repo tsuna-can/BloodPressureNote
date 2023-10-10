@@ -1,4 +1,4 @@
-package com.example.bloodpressurenote.components.screens
+package com.example.bloodpressurenote.ui.components.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
