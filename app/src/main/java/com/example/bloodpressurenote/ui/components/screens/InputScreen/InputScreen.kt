@@ -7,6 +7,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -18,14 +19,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bloodpressurenote.R
+import com.example.bloodpressurenote.ui.AppViewModelProvider
 import com.example.bloodpressurenote.ui.components.TextField
+import kotlinx.coroutines.launch
 
 @Composable
 fun InputScreen(
-    message: String,
-    viewModel: InputScreenViewModel = viewModel(),
+    viewModel: InputScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
     val focusManager = LocalFocusManager.current
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -36,8 +39,6 @@ fun InputScreen(
     ) {
         val bloodPressureDetails = viewModel.inputUiState.bloodPressureDetails
         val inputUiState = viewModel.inputUiState
-
-        Text(text = message)
 
         TextField(
             label = stringResource(id = R.string.systolic_blood_pressure),
@@ -103,7 +104,11 @@ fun InputScreen(
         )
 
         Button(
-            onClick = {},
+            onClick = {
+                coroutineScope.launch {
+                    viewModel.saveItem()
+                }
+            },
             modifier = Modifier
                 .padding(16.dp),
             enabled = inputUiState.enableSave
