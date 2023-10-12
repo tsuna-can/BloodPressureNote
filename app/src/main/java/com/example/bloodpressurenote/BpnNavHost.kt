@@ -20,9 +20,7 @@ fun BpnNavHost(
         modifier = modifier
     ) {
         composable(route = Input.route) {
-            InputScreen(
-                message = "This is message from NavHost"
-            )
+            InputScreen()
         }
         composable(route = Statistics.route) {
             StatisticsScreen(
