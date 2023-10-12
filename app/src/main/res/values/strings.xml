@@ -6,4 +6,6 @@
     <string name="save_button">Save</string>
     <string name="note">Note</string>
     <string name="error_not_number">Please input value as number</string>
+    <string name="save_success">Successfully saved</string>
+    <string name="save_fail">Save failed</string>
 </resources>
