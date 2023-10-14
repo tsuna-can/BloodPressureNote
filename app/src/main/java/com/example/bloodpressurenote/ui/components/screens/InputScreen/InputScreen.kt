@@ -22,92 +22,97 @@ import com.example.bloodpressurenote.ui.components.TextField
 
 @Composable
 fun InputScreen(
-        viewModel: InputScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    viewModel: InputScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
     val focusManager = LocalFocusManager.current
+    val uiState = viewModel.inputUiState
+    val bloodPressureDetails = viewModel.inputUiState.bloodPressureDetails
 
     Column(
-            modifier = Modifier
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState())
-                    .semantics { contentDescription = "Overview Screen" },
-            horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+            .semantics { contentDescription = "Overview Screen" },
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val bloodPressureDetails = viewModel.inputUiState.bloodPressureDetails
-        val inputUiState = viewModel.inputUiState
 
         TextField(
-                label = stringResource(id = R.string.systolic_blood_pressure),
-                value = bloodPressureDetails.systolicBloodPressure,
-                onValueChange = {
-                    viewModel.updateUiState(
-                            bloodPressureDetails.copy(
-                                    systolicBloodPressure = it
-                            )
-                    )
-                },
-                isError = !inputUiState.isSystolicBloodPressureValid,
-                keyboardType = KeyboardType.Number,
-                errorMessage = stringResource(id = R.string.error_not_number),
-                focusManager = focusManager,
+            label = stringResource(id = R.string.systolic_blood_pressure),
+            value = bloodPressureDetails.systolicBloodPressure,
+            onValueChange = {
+                viewModel.updateSystolicBloodPressure(it)
+            },
+            keyboardType = KeyboardType.Number,
+            isError = uiState.isSystolicBloodPressureValid != null,
+            errorMessage = getErrorText(uiState.isSystolicBloodPressureValid),
+            focusManager = focusManager,
         )
 
         TextField(
-                label = stringResource(id = R.string.diastolic_blood_pressure),
-                value = bloodPressureDetails.diastolicBloodPressure,
-                onValueChange = {
-                    viewModel.updateUiState(
-                            bloodPressureDetails.copy(
-                                    diastolicBloodPressure = it
-                            )
-                    )
-                },
-                isError = !inputUiState.isDiastolicBloodPressureValid,
-                keyboardType = KeyboardType.Number,
-                errorMessage = stringResource(id = R.string.error_not_number),
-                focusManager = focusManager,
+            label = stringResource(id = R.string.diastolic_blood_pressure),
+            value = bloodPressureDetails.diastolicBloodPressure,
+            onValueChange = {
+                viewModel.updateDiastolicBloodPressure(it)
+            },
+            keyboardType = KeyboardType.Number,
+            isError = uiState.isDiastolicBloodPressureValid != null,
+            errorMessage = getErrorText(errorType = uiState.isDiastolicBloodPressureValid),
+            focusManager = focusManager,
         )
 
         TextField(
-                label = stringResource(id = R.string.heart_rate),
-                value = bloodPressureDetails.heartRate,
-                onValueChange = {
-                    viewModel.updateUiState(
-                            bloodPressureDetails.copy(
-                                    heartRate = it
-                            )
-                    )
-                },
-                isError = !inputUiState.isHeartRateValid,
-                keyboardType = KeyboardType.Number,
-                errorMessage = stringResource(id = R.string.error_not_number),
-                focusManager = focusManager
+            label = stringResource(id = R.string.heart_rate),
+            value = bloodPressureDetails.heartRate,
+            onValueChange = {
+                viewModel.updateHeartRate(it)
+            },
+            keyboardType = KeyboardType.Number,
+            isError = uiState.isHeartRateValid != null,
+            errorMessage = getErrorText(errorType = uiState.isHeartRateValid),
+            focusManager = focusManager
         )
 
         TextField(
-                label = stringResource(id = R.string.note),
-                value = bloodPressureDetails.note,
-                onValueChange = {
-                    viewModel.updateUiState(
-                            bloodPressureDetails.copy(
-                                    note = it
-                            )
-                    )
-                },
-                maxLines = 3,
-                singleLine = false,
-                focusManager = focusManager
+            label = stringResource(id = R.string.note),
+            value = bloodPressureDetails.note,
+            onValueChange = {
+                viewModel.updateNote(it)
+            },
+            maxLines = 3,
+            singleLine = false,
+            focusManager = focusManager,
+            isError = uiState.isNoteValid != null,
+            errorMessage = getErrorText(errorType = uiState.isNoteValid)
         )
 
         Button(
-                onClick = {
-                    viewModel.saveItem()
-                },
-                modifier = Modifier
-                        .padding(16.dp),
-                enabled = inputUiState.enableSave
+            onClick = { viewModel.saveItem() },
+            modifier = Modifier.padding(16.dp),
+            enabled = isEnableSave(uiState = uiState)
         ) {
             Text(stringResource(id = R.string.save_button))
         }
     }
+}
+
+@Composable
+fun getErrorText(errorType: ErrorType?): String {
+    return when (errorType) {
+        ErrorType.NOT_NUMERIC -> stringResource(id = R.string.error_not_number)
+        ErrorType.MORE_THAN_3_DIGITS -> stringResource(id = R.string.error_more_3_digits)
+        ErrorType.MORE_THAN_100_DIGITS -> stringResource(id = R.string.error_more_100_digits)
+        ErrorType.IS_BLANK -> stringResource(id = R.string.error_mandatory)
+        else -> ""
+    }
+}
+
+// TODO move this logic to ViewModel
+@Composable
+fun isEnableSave(uiState: InputUiState): Boolean {
+    return uiState.isSystolicBloodPressureValid == null
+            && uiState.isDiastolicBloodPressureValid == null
+            && uiState.isHeartRateValid == null
+            && uiState.isNoteValid == null
+            && uiState.bloodPressureDetails.systolicBloodPressure.isNotBlank()
+            && uiState.bloodPressureDetails.diastolicBloodPressure.isNotBlank()
 }
