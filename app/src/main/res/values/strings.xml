@@ -6,6 +6,9 @@
     <string name="save_button">Save</string>
     <string name="note">Note</string>
     <string name="error_not_number">Please input value as number</string>
+    <string name="error_mandatory">This is mandatory</string>
+    <string name="error_more_3_digits">Please input less than 3 digits</string>
+    <string name="error_more_100_digits">Please input less than 100 digits</string>
     <string name="save_success">Successfully saved</string>
     <string name="save_fail">Save failed</string>
 </resources>

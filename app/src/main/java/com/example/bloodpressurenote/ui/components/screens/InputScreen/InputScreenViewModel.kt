@@ -10,56 +10,91 @@ import com.example.bloodpressurenote.data.BloodPressureRecordsRepository
 import kotlinx.coroutines.launch
 
 class InputScreenViewModel(private val bloodPressureRecordsRepository: BloodPressureRecordsRepository) :
-        ViewModel() {
+    ViewModel() {
 
     var inputUiState by mutableStateOf(InputUiState())
         private set
 
-    fun updateUiState(bloodPressureDetails: BloodPressureDetails) {
-        inputUiState = InputUiState(
-                bloodPressureDetails = bloodPressureDetails,
-                enableSave = bloodPressureDetails.systolicBloodPressure.isNotBlank() && bloodPressureDetails.diastolicBloodPressure.isNotBlank()
-        )
+    fun updateSystolicBloodPressure(value: String) {
+        inputUiState =
+            inputUiState.copy(
+                bloodPressureDetails = inputUiState.bloodPressureDetails.copy(systolicBloodPressure = value),
+                isSystolicBloodPressureValid = validateBloodPressure(value)
+            )
     }
 
-    private fun validateInput(uiState: BloodPressureDetails = inputUiState.bloodPressureDetails): Boolean {
-        return with(uiState) {
-            systolicBloodPressure.toIntOrNull() != null
-                    && diastolicBloodPressure.toIntOrNull() != null
-                    && heartRate.toIntOrNull() != null
+    fun updateDiastolicBloodPressure(value: String) {
+        inputUiState =
+            inputUiState.copy(
+                bloodPressureDetails = inputUiState.bloodPressureDetails.copy(diastolicBloodPressure = value),
+                isDiastolicBloodPressureValid = validateBloodPressure(value)
+            )
+    }
+
+    fun updateHeartRate(value: String) {
+        inputUiState =
+            inputUiState.copy(
+                bloodPressureDetails = inputUiState.bloodPressureDetails.copy(heartRate = value),
+                isHeartRateValid = when {
+                    value.length > 3 -> ErrorType.MORE_THAN_3_DIGITS
+                    value.isNotBlank() && value.toIntOrNull() == null -> ErrorType.NOT_NUMERIC
+                    else -> null
+                }
+            )
+    }
+
+    fun updateNote(value: String) {
+        inputUiState =
+            inputUiState.copy(
+                bloodPressureDetails = inputUiState.bloodPressureDetails.copy(note = value),
+                isNoteValid = if (value.length > 100) ErrorType.MORE_THAN_100_DIGITS else null
+            )
+    }
+
+    private fun validateBloodPressure(value: String): ErrorType? {
+        return when {
+            value.isBlank() -> ErrorType.IS_BLANK
+            value.length > 3 -> ErrorType.MORE_THAN_3_DIGITS
+            value.isNotBlank() && value.toIntOrNull() == null -> ErrorType.NOT_NUMERIC
+            else -> null
         }
     }
 
     fun saveItem() {
         viewModelScope.launch {
-            if (validateInput()) {
-                bloodPressureRecordsRepository.insertItem(inputUiState.bloodPressureDetails.toBloodPressureRecord())
-            }
+            bloodPressureRecordsRepository.insertItem(
+                inputUiState.bloodPressureDetails.toBloodPressureRecord()
+            )
         }
     }
 
 }
 
 data class InputUiState(
-        val bloodPressureDetails: BloodPressureDetails = BloodPressureDetails(),
-        val isSystolicBloodPressureValid: Boolean = true,
-        val isDiastolicBloodPressureValid: Boolean = true,
-        val isHeartRateValid: Boolean = true,
-        val enableSave: Boolean = false,
+    val bloodPressureDetails: BloodPressureDetails = BloodPressureDetails(),
+    val isSystolicBloodPressureValid: ErrorType? = null,
+    val isDiastolicBloodPressureValid: ErrorType? = null,
+    val isHeartRateValid: ErrorType? = null,
+    val isNoteValid: ErrorType? = null,
+    val enableSave: Boolean = false
 )
 
 data class BloodPressureDetails(
-        val id: Int = 0,
-        val systolicBloodPressure: String = "",
-        val diastolicBloodPressure: String = "",
-        val heartRate: String = "",
-        val note: String = "",
+    val id: Int = 0,
+    val systolicBloodPressure: String = "",
+    val diastolicBloodPressure: String = "",
+    val heartRate: String = "",
+    val note: String = "",
 )
 
+enum class ErrorType {
+    MORE_THAN_3_DIGITS, MORE_THAN_100_DIGITS, IS_BLANK, NOT_NUMERIC
+}
+
 fun BloodPressureDetails.toBloodPressureRecord(): BloodPressureRecord = BloodPressureRecord(
-        id = id,
-        systolicBloodPressure = systolicBloodPressure.toIntOrNull() ?: 0,
-        diastolicBloodPressure = diastolicBloodPressure.toIntOrNull() ?: 0,
-        heartRate = heartRate.toIntOrNull() ?: 0,
-        note = note
+    id = id,
+    systolicBloodPressure = systolicBloodPressure.toIntOrNull() ?: 0,
+    diastolicBloodPressure = diastolicBloodPressure.toIntOrNull() ?: 0,
+    heartRate = heartRate.toIntOrNull() ?: 0,
+    note = note
 )
