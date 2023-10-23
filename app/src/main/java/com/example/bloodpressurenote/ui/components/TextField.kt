@@ -1,5 +1,6 @@
 package com.example.bloodpressurenote.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -37,7 +38,6 @@ fun TextField(
             value = value,
             onValueChange = onValueChange,
             modifier = Modifier
-                .padding(16.dp)
                 .fillMaxWidth(),
             isError = isError,
             keyboardOptions = KeyboardOptions(
