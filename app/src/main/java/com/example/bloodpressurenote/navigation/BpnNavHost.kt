@@ -1,13 +1,14 @@
-package com.example.bloodpressurenote
+package com.example.bloodpressurenote.navigation
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.bloodpressurenote.ui.components.screens.InputScreen.InputScreen
-import com.example.bloodpressurenote.ui.components.screens.StatisticsScreen
+import com.example.bloodpressurenote.ui.screens.InputScreen.InputScreen
+import com.example.bloodpressurenote.ui.screens.StatisticsScreen
 
 @Composable
 fun BpnNavHost(

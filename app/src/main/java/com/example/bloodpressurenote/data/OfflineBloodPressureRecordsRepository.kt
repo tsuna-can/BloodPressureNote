@@ -1,9 +1,11 @@
 package com.example.bloodpressurenote.data
 
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class OfflineBloodPressureRecordsRepository(private val bloodPressureRecordDao: BloodPressureRecordDao) :
-    BloodPressureRecordsRepository {
+class OfflineBloodPressureRecordsRepository @Inject constructor(
+    private val bloodPressureRecordDao: BloodPressureRecordDao
+) : BloodPressureRecordsRepository {
     override fun getAllItemsStream(): Flow<List<BloodPressureRecord>> =
         bloodPressureRecordDao.getAllItems()
 

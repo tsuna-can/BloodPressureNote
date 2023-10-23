@@ -1,4 +1,4 @@
-package com.example.bloodpressurenote
+package com.example.bloodpressurenote.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit

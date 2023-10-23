@@ -1,4 +1,4 @@
-package com.example.bloodpressurenote.ui.components.screens.InputScreen
+package com.example.bloodpressurenote.ui.screens.InputScreen
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,12 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bloodpressurenote.data.BloodPressureRecord
 import com.example.bloodpressurenote.data.BloodPressureRecordsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.Date
+import javax.inject.Inject
 
-class InputScreenViewModel(private val bloodPressureRecordsRepository: BloodPressureRecordsRepository) :
+@HiltViewModel
+class InputScreenViewModel @Inject constructor(private val bloodPressureRecordsRepository: BloodPressureRecordsRepository) :
     ViewModel() {
 
     var inputUiState by mutableStateOf(InputUiState())
@@ -57,7 +60,9 @@ class InputScreenViewModel(private val bloodPressureRecordsRepository: BloodPres
     fun updateDate(value: Long?) {
         inputUiState =
             inputUiState.copy(
-                bloodPressureDetails = inputUiState.bloodPressureDetails.copy(date = value ?: Date().time)
+                bloodPressureDetails = inputUiState.bloodPressureDetails.copy(
+                    date = value ?: Date().time
+                )
             )
     }
 
