@@ -13,9 +13,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.bloodpressurenote.navigation.BpnNavHost
+import com.example.bloodpressurenote.navigation.Input
+import com.example.bloodpressurenote.navigation.navigateSingleTopTo
+import com.example.bloodpressurenote.navigation.tabRowScreens
 import com.example.bloodpressurenote.ui.components.BpnTabRow
 import com.example.bloodpressurenote.ui.theme.BloodPressureNoteTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
