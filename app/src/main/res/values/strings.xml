@@ -11,4 +11,7 @@
     <string name="error_more_100_digits">Please input less than 100 digits</string>
     <string name="save_success">Successfully saved</string>
     <string name="save_fail">Save failed</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="calendar">Calendar</string>
 </resources>

@@ -8,6 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.bloodpressurenote.data.BloodPressureRecord
 import com.example.bloodpressurenote.data.BloodPressureRecordsRepository
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.util.Date
 
 class InputScreenViewModel(private val bloodPressureRecordsRepository: BloodPressureRecordsRepository) :
     ViewModel() {
@@ -51,6 +54,13 @@ class InputScreenViewModel(private val bloodPressureRecordsRepository: BloodPres
             )
     }
 
+    fun updateDate(value: Long?) {
+        inputUiState =
+            inputUiState.copy(
+                bloodPressureDetails = inputUiState.bloodPressureDetails.copy(date = value ?: Date().time)
+            )
+    }
+
     private fun validateBloodPressure(value: String): ErrorType? {
         return when {
             value.isBlank() -> ErrorType.IS_BLANK
@@ -85,6 +95,7 @@ data class BloodPressureDetails(
     val diastolicBloodPressure: String = "",
     val heartRate: String = "",
     val note: String = "",
+    val date: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC).times(1000)
 )
 
 enum class ErrorType {
@@ -96,5 +107,6 @@ fun BloodPressureDetails.toBloodPressureRecord(): BloodPressureRecord = BloodPre
     systolicBloodPressure = systolicBloodPressure.toIntOrNull() ?: 0,
     diastolicBloodPressure = diastolicBloodPressure.toIntOrNull() ?: 0,
     heartRate = heartRate.toIntOrNull() ?: 0,
-    note = note
+    note = note,
+    createdAt = Date(date)
 )
