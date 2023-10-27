@@ -15,8 +15,9 @@ import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class InputScreenViewModel @Inject constructor(private val bloodPressureRecordsRepository: BloodPressureRecordsRepository) :
-    ViewModel() {
+class InputScreenViewModel @Inject constructor(
+    private val bloodPressureRecordsRepository: BloodPressureRecordsRepository
+) : ViewModel() {
 
     var inputUiState by mutableStateOf(InputUiState())
         private set
