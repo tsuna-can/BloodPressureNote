@@ -1,6 +1,7 @@
 package com.example.bloodpressurenote.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Equalizer
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -20,5 +21,11 @@ object Statistics : Destination {
     override val route = "statistics"
 }
 
+object Calendar : Destination {
+    override val icon = Icons.Filled.CalendarMonth
+    override val route = "calendar"
+}
+
+
 // Screens to be displayed in the top RallyTabRow
-val tabRowScreens = listOf(Input, Statistics)
+val tabRowScreens = listOf(Input, Calendar, Statistics)
