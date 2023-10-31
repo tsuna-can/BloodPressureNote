@@ -83,4 +83,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hilt_version"]}")
     kapt("com.google.dagger:hilt-android-compiler:${rootProject.extra["hilt_version"]}")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0-rc01")
+
+    // Calendar
+    implementation("com.kizitonwose.calendar:compose:2.4.0")
 }
