@@ -1,11 +1,10 @@
 package com.example.bloodpressurenote.ui.screens.CalendarScreen
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-
+import com.example.bloodpressurenote.ui.components.calendar.Calendar
 @Composable
 fun CalendarScreen(
     viewModel: CalendarScreenViewModel = hiltViewModel()
@@ -13,5 +12,5 @@ fun CalendarScreen(
 
     val homeUiState by viewModel.homeUiState.collectAsState()
 
-    Text(text = homeUiState.recordList.toString())
+    Calendar(homeUiState.recordList)
 }
