@@ -1,0 +1,11 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: local
+    hooks:
+      - id: detekt
+        name: detekt check
+        description: Runs `detekt` on modified .kt files.
+        language: script
+        entry: ./scripts/detekt.sh
+        files: \.kt
