@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun StatisticsScreen(
     message: String,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = Modifier

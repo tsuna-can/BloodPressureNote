@@ -24,6 +24,7 @@ import com.example.bloodpressurenote.ui.components.TextField
 
 @Composable
 fun InputScreen(
+    modifier: Modifier = Modifier,
     viewModel: InputScreenViewModel = hiltViewModel(),
 ) {
     val focusManager = LocalFocusManager.current
@@ -88,7 +89,7 @@ fun InputScreen(
             errorMessage = getErrorText(errorType = uiState.isNoteValid)
         )
 
-        DatePickerComponent(bloodPressureDetails.date, viewModel::updateDate)
+        DatePickerComponent(bloodPressureDetails.date, onChangeValue = viewModel::updateDate)
 
         Button(
             onClick = { viewModel.saveItem() },

@@ -38,7 +38,8 @@ import java.util.Locale
 fun BpnTabRow(
     allScreens: List<Destination>,
     onTabSelected: (Destination) -> Unit,
-    currentScreen: Destination
+    currentScreen: Destination,
+    modifier: Modifier = Modifier,
 ) {
     Surface(
         Modifier
@@ -68,7 +69,8 @@ private fun BpnTab(
     text: String,
     icon: ImageVector,
     onSelected: () -> Unit,
-    selected: Boolean
+    selected: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     val color = MaterialTheme.colorScheme.onSurface
     val durationMillis = if (selected) TabFadeInAnimationDuration else TabFadeOutAnimationDuration

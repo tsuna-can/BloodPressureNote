@@ -36,6 +36,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun DatePickerComponent(
     selectedDateMillis: Long,
+    modifier: Modifier = Modifier,
     onChangeValue: (Long?) -> Unit = {}
 ) {
     var showPicker by remember { mutableStateOf(false) }
@@ -127,8 +128,10 @@ fun dateFormatter(milliseconds: Long?): String {
     }
 }
 
+
+@Suppress("UnusedPrivateMember")
 @Composable
 @Preview
-fun DatePickerComponentPreview() {
+private fun DatePickerComponentPreview() {
     DatePickerComponent(selectedDateMillis = Instant.now().toEpochMilli())
 }

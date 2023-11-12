@@ -36,7 +36,8 @@ import java.util.Locale
 
 @Composable
 fun Calendar(
-    recordList: List<BloodPressureRecord>
+    recordList: List<BloodPressureRecord>,
+    modifier: Modifier = Modifier,
 ) {
     val currentMonth = remember { YearMonth.now() }
     val startMonth = remember { currentMonth.minusMonths(100) }
@@ -84,7 +85,10 @@ fun Calendar(
 }
 
 @Composable
-fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
+fun DaysOfWeekTitle(
+    daysOfWeek: List<DayOfWeek>,
+    modifier: Modifier = Modifier,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -103,7 +107,8 @@ fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
 @Composable
 fun Day(
     day: CalendarDay,
-    bloodPressureRecord: BloodPressureRecord?
+    bloodPressureRecord: BloodPressureRecord?,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = Modifier
@@ -121,9 +126,10 @@ fun Day(
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-fun PreviewCalendarScreen() {
+private fun PreviewCalendarScreen() {
     val today = Date()
 
     Calendar(
@@ -138,7 +144,7 @@ fun PreviewCalendarScreen() {
             BloodPressureRecord(
                 systolicBloodPressure = 110,
                 diastolicBloodPressure = 60,
-                createdAt =  Date(today.getTime() + (1000 * 60 * 60 * 24)),
+                createdAt = Date(today.getTime() + (1000 * 60 * 60 * 24)),
                 heartRate = 60,
                 note = "memo"
             )

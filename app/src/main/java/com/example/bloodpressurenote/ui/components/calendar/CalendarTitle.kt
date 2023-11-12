@@ -29,10 +29,10 @@ import java.time.YearMonth
 
 @Composable
 fun CalendarTitle(
-    modifier: Modifier,
     currentMonth: YearMonth,
     goToPrevious: () -> Unit,
     goToNext: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier.height(40.dp),
