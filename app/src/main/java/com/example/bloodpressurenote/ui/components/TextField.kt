@@ -22,6 +22,8 @@ fun TextField(
     label: String,
     value: String,
     onValueChange: (String) -> Unit,
+    focusManager: FocusManager,
+    modifier: Modifier = Modifier,
     isError: Boolean = false,
     errorMessage: String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
@@ -31,7 +33,6 @@ fun TextField(
         onNext = {
             focusManager.moveFocus(FocusDirection.Down)
         }),
-    focusManager: FocusManager,
 ) {
     Column() {
         OutlinedTextField(

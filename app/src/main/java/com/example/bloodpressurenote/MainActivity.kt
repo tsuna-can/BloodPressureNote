@@ -40,7 +40,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BloodPressureNote() {
+fun BloodPressureNote(
+    modifier: Modifier = Modifier,
+) {
     BloodPressureNoteTheme {
         val navController = rememberNavController()
         val currentBackStack by navController.currentBackStackEntryAsState()

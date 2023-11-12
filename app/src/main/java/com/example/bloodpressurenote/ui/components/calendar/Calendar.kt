@@ -50,7 +50,8 @@ import java.util.Locale
 
 @Composable
 fun Calendar(
-    recordList: List<BloodPressureRecord>
+    recordList: List<BloodPressureRecord>,
+    modifier: Modifier = Modifier,
 ) {
     val currentMonth = remember { YearMonth.now() }
     val startMonth = remember { currentMonth.minusMonths(100) }
@@ -123,7 +124,10 @@ fun Calendar(
 }
 
 @Composable
-fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
+fun DaysOfWeekTitle(
+    daysOfWeek: List<DayOfWeek>,
+    modifier: Modifier = Modifier,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -143,6 +147,7 @@ fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
 fun Day(
     day: CalendarDay,
     bloodPressureRecord: BloodPressureRecord?,
+    modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     onClick: (CalendarDay) -> Unit = {}
 ) {
@@ -227,9 +232,10 @@ fun SelectedDayRecord(
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-fun PreviewCalendar() {
+private fun PreviewCalendar() {
     val today = Date()
 
     Calendar(
@@ -252,9 +258,11 @@ fun PreviewCalendar() {
     )
 }
 
+
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-fun PreviewSelectedDayRecord() {
+private fun PreviewSelectedDayRecord() {
     val today = Date()
 
     SelectedDayRecord(

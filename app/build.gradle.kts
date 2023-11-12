@@ -1,9 +1,12 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp") version "1.8.21-1.0.11"
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("io.gitlab.arturbosch.detekt") version "1.23.3"
 }
 
 android {
@@ -86,4 +89,24 @@ dependencies {
 
     // Calendar
     implementation("com.kizitonwose.calendar:compose:2.4.0")
+}
+
+detekt{
+    config.setFrom("${rootProject.projectDir}/config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+}
+
+tasks {
+    withType<Detekt> {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+
+        reports {
+            html.required.set(true)
+            html.outputLocation.set(file("${buildDir}/reports/detekt.html"))
+            xml.required.set(false)
+            txt.required.set(true)
+            sarif.required.set(true)
+        }
+    }
+
 }
