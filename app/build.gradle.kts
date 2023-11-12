@@ -6,7 +6,7 @@ plugins {
     id("com.google.devtools.ksp") version "1.8.21-1.0.11"
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
-    id("io.gitlab.arturbosch.detekt") version "1.23.1"
+    id("io.gitlab.arturbosch.detekt") version "1.23.3"
 }
 
 android {
@@ -57,12 +57,6 @@ android {
 
 dependencies {
     val nav_version = "2.5.3"
-
-    // detekt
-    implementation("io.gitlab.arturbosch.detekt:detekt-grade-plugin:1.23.1")
-    implementation("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1")
-    implementation("io.gitlab.arturbosch.detekt:detekt-cli:1.23.1")
-    detektPlugins("io.nlopez.compose.rules:detekt:0.3.3")
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("androidx.compose.material:material-icons-extended")
