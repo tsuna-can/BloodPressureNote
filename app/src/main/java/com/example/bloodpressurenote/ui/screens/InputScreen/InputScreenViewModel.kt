@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bloodpressurenote.data.BloodPressureRecord
 import com.example.bloodpressurenote.data.BloodPressureRecordsRepository
+import com.example.bloodpressurenote.util.StringResource
+import com.example.bloodpressurenote.util.validator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -22,31 +24,43 @@ class InputScreenViewModel @Inject constructor(
     var inputUiState by mutableStateOf(InputUiState())
         private set
 
-    fun updateSystolicBloodPressure(value: String) {
+    fun updateBloodPressure(value: String, bloodPressureType: String) {
+        val validationResult =
+            validator(value = value, maxLength = 3, isNumeric = true)
         inputUiState =
-            inputUiState.copy(
-                bloodPressureDetails = inputUiState.bloodPressureDetails.copy(systolicBloodPressure = value),
-                isSystolicBloodPressureValid = validateBloodPressure(value)
-            )
-    }
+            when (bloodPressureType) {
+                "systolic" -> {
+                    inputUiState.copy(
+                        bloodPressureDetails = inputUiState.bloodPressureDetails.copy(
+                            systolicBloodPressure = value
+                        ),
+                        systolicBPErrorMessage = validationResult
+                    )
+                }
 
-    fun updateDiastolicBloodPressure(value: String) {
-        inputUiState =
-            inputUiState.copy(
-                bloodPressureDetails = inputUiState.bloodPressureDetails.copy(diastolicBloodPressure = value),
-                isDiastolicBloodPressureValid = validateBloodPressure(value)
-            )
+                "diastolic" -> {
+                    inputUiState.copy(
+                        bloodPressureDetails = inputUiState.bloodPressureDetails.copy(
+                            diastolicBloodPressure = value
+                        ),
+                        diastolicBPErrorMessage = validationResult
+                    )
+                }
+
+                else -> inputUiState
+            }
     }
 
     fun updateHeartRate(value: String) {
         inputUiState =
             inputUiState.copy(
                 bloodPressureDetails = inputUiState.bloodPressureDetails.copy(heartRate = value),
-                isHeartRateValid = when {
-                    value.length > 3 -> ErrorType.MORE_THAN_3_DIGITS
-                    value.isNotBlank() && value.toIntOrNull() == null -> ErrorType.NOT_NUMERIC
-                    else -> null
-                }
+                heartRateErrorMessage = validator(
+                    value = value,
+                    maxLength = 3,
+                    allowBlank = true,
+                    isNumeric = true
+                )
             )
     }
 
@@ -54,7 +68,7 @@ class InputScreenViewModel @Inject constructor(
         inputUiState =
             inputUiState.copy(
                 bloodPressureDetails = inputUiState.bloodPressureDetails.copy(note = value),
-                isNoteValid = if (value.length > 100) ErrorType.MORE_THAN_100_DIGITS else null
+                noteErrorMessage = validator(value = value, maxLength = 100, allowBlank = true)
             )
     }
 
@@ -67,31 +81,26 @@ class InputScreenViewModel @Inject constructor(
             )
     }
 
-    private fun validateBloodPressure(value: String): ErrorType? {
-        return when {
-            value.isBlank() -> ErrorType.IS_BLANK
-            value.length > 3 -> ErrorType.MORE_THAN_3_DIGITS
-            value.isNotBlank() && value.toIntOrNull() == null -> ErrorType.NOT_NUMERIC
-            else -> null
-        }
-    }
-
     fun saveItem() {
         viewModelScope.launch {
             bloodPressureRecordsRepository.insertItem(
                 inputUiState.bloodPressureDetails.toBloodPressureRecord()
             )
+            refreshViewModel()
         }
     }
 
+    private fun refreshViewModel() {
+        inputUiState = InputUiState()
+    }
 }
 
 data class InputUiState(
     val bloodPressureDetails: BloodPressureDetails = BloodPressureDetails(),
-    val isSystolicBloodPressureValid: ErrorType? = null,
-    val isDiastolicBloodPressureValid: ErrorType? = null,
-    val isHeartRateValid: ErrorType? = null,
-    val isNoteValid: ErrorType? = null,
+    val systolicBPErrorMessage: StringResource? = null,
+    val diastolicBPErrorMessage: StringResource? = null,
+    val heartRateErrorMessage: StringResource? = null,
+    val noteErrorMessage: StringResource? = null,
     val enableSave: Boolean = false
 )
 
@@ -103,10 +112,6 @@ data class BloodPressureDetails(
     val note: String = "",
     val date: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC).times(1000)
 )
-
-enum class ErrorType {
-    MORE_THAN_3_DIGITS, MORE_THAN_100_DIGITS, IS_BLANK, NOT_NUMERIC
-}
 
 fun BloodPressureDetails.toBloodPressureRecord(): BloodPressureRecord = BloodPressureRecord(
     id = id,
