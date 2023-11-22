@@ -24,7 +24,6 @@ fun TextField(
     onValueChange: (String) -> Unit,
     focusManager: FocusManager,
     modifier: Modifier = Modifier,
-    isError: Boolean = false,
     errorMessage: String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
     maxLines: Int = 1,
@@ -34,7 +33,11 @@ fun TextField(
             focusManager.moveFocus(FocusDirection.Down)
         }),
 ) {
-    Column() {
+    val isError = errorMessage.isNotEmpty()
+    
+    Column(
+        modifier = modifier
+    ) {
         OutlinedTextField(
             label = { Text(label) },
             value = value,
