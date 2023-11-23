@@ -89,6 +89,8 @@ dependencies {
 
     // Calendar
     implementation("com.kizitonwose.calendar:compose:2.4.0")
+
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1")
 }
 
 detekt{
@@ -106,6 +108,7 @@ tasks {
             xml.required.set(false)
             txt.required.set(true)
             sarif.required.set(true)
+            autoCorrect = true
         }
     }
 
