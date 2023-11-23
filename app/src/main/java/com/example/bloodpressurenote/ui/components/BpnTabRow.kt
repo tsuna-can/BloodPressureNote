@@ -44,20 +44,20 @@ fun BpnTabRow(
     Surface(
         Modifier
             .height(TabHeight)
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         Row(
             Modifier
                 .background(color = MaterialTheme.colorScheme.tertiary)
                 .selectableGroup(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             allScreens.forEach { screen ->
                 BpnTab(
                     text = screen.route,
                     icon = screen.icon,
                     onSelected = { onTabSelected(screen) },
-                    selected = currentScreen == screen
+                    selected = currentScreen == screen,
                 )
             }
         }
@@ -78,12 +78,13 @@ private fun BpnTab(
         tween<Color>(
             durationMillis = durationMillis,
             easing = LinearEasing,
-            delayMillis = TabFadeInAnimationDelay
+            delayMillis = TabFadeInAnimationDelay,
         )
     }
     val tabTintColor by animateColorAsState(
         targetValue = if (selected) color else color.copy(alpha = InactiveTabOpacity),
-        animationSpec = animSpec, label = ""
+        animationSpec = animSpec,
+        label = "",
     )
     Row(
         modifier = Modifier
@@ -97,11 +98,11 @@ private fun BpnTab(
                 indication = rememberRipple(
                     bounded = false,
                     radius = Dp.Unspecified,
-                    color = Color.Unspecified
-                )
+                    color = Color.Unspecified,
+                ),
             )
             .clearAndSetSemantics { contentDescription = text },
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(imageVector = icon, contentDescription = text, tint = tabTintColor)
         Spacer(Modifier.width(12.dp))

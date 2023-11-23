@@ -9,12 +9,12 @@ interface StringResource {
 
 data class ResStringResource(
     @StringRes private val resId: Int,
-    private val params: List<Any> = emptyList()
+    private val params: List<Any> = emptyList(),
 ) : StringResource {
     companion object {
         fun create(
             @StringRes resId: Int,
-            vararg params: Any
+            vararg params: Any,
         ): ResStringResource {
             return ResStringResource(resId, listOf(*params))
         }

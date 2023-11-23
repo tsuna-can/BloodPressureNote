@@ -20,7 +20,7 @@ fun StatisticsScreen(
         modifier = Modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
-            .semantics { contentDescription = "Overview Screen" }
+            .semantics { contentDescription = "Overview Screen" },
     ) {
         Text(text = "This is StatisticsScreen")
         Text(text = message)

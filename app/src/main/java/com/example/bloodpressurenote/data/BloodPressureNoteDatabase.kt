@@ -13,5 +13,4 @@ import com.example.bloodpressurenote.util.Converters
 abstract class BloodPressureNoteDatabase : RoomDatabase() {
 
     abstract fun bloodPressureRecordDao(): BloodPressureRecordDao
-
 }

@@ -52,11 +52,11 @@ fun InputScreen(
     val bloodPressureDetails = uiState.bloodPressureDetails
 
     val enableSave = uiState.systolicBPErrorMessage == null &&
-            uiState.diastolicBPErrorMessage == null &&
-            uiState.heartRateErrorMessage == null &&
-            uiState.noteErrorMessage == null &&
-            bloodPressureDetails.systolicBloodPressure.isNotBlank() &&
-            bloodPressureDetails.diastolicBloodPressure.isNotBlank() // TODO move to viewmodel
+        uiState.diastolicBPErrorMessage == null &&
+        uiState.heartRateErrorMessage == null &&
+        uiState.noteErrorMessage == null &&
+        bloodPressureDetails.systolicBloodPressure.isNotBlank() &&
+        bloodPressureDetails.diastolicBloodPressure.isNotBlank() // TODO move to viewmodel
 
     Column(
         modifier = modifier
@@ -64,7 +64,7 @@ fun InputScreen(
             .verticalScroll(rememberScrollState())
             .semantics { contentDescription = "Overview Screen" },
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         TextField(
             label = stringResource(id = R.string.systolic_blood_pressure),
@@ -92,7 +92,7 @@ fun InputScreen(
             onValueChange = { updateHeartRate(it) },
             keyboardType = KeyboardType.Number,
             errorMessage = uiState.heartRateErrorMessage?.getString(LocalContext.current) ?: "",
-            focusManager = focusManager
+            focusManager = focusManager,
         )
 
         TextField(
@@ -112,7 +112,7 @@ fun InputScreen(
         Button(
             onClick = onSave,
             modifier = Modifier.padding(16.dp),
-            enabled = enableSave
+            enabled = enableSave,
         ) {
             Text(stringResource(id = R.string.save_button))
         }

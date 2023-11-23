@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     BloodPressureNote()
                 }
@@ -57,13 +57,13 @@ fun BloodPressureNote(
                     onTabSelected = { newScreen ->
                         navController.navigateSingleTopTo(newScreen.route)
                     },
-                    currentScreen = currentScreen
+                    currentScreen = currentScreen,
                 )
-            }
+            },
         ) { innerPadding ->
             BpnNavHost(
                 navController = navController,
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
         }
     }

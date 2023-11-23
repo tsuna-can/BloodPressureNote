@@ -5,4 +5,4 @@ import dagger.hilt.android.HiltAndroidApp
 
 @Suppress("EmptyClassBlock")
 @HiltAndroidApp
-class BloodPressureNoteApplication : Application() {}
+class BloodPressureNoteApplication : Application()

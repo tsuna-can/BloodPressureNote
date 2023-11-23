@@ -26,6 +26,5 @@ object Calendar : Destination {
     override val route = "calendar"
 }
 
-
 // Screens to be displayed in the top RallyTabRow
 val tabRowScreens = listOf(Input, Calendar, Statistics)

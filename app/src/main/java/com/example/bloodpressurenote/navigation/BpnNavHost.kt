@@ -1,6 +1,5 @@
 package com.example.bloodpressurenote.navigation
 
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -14,19 +13,19 @@ import com.example.bloodpressurenote.ui.screens.StatisticsScreen
 @Composable
 fun BpnNavHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     NavHost(
         navController = navController,
         startDestination = Input.route,
-        modifier = modifier
+        modifier = modifier,
     ) {
         composable(route = Input.route) {
             InputScreen()
         }
         composable(route = Statistics.route) {
             StatisticsScreen(
-                message = "This is message from NavHost"
+                message = "This is message from NavHost",
             )
         }
         composable(route = Calendar.route) {
@@ -41,7 +40,7 @@ fun NavHostController.navigateSingleTopTo(route: String) =
         // avoid building up a large stack of destinations
         // on the back stack as users select items
         popUpTo(
-            this@navigateSingleTopTo.graph.findStartDestination().id
+            this@navigateSingleTopTo.graph.findStartDestination().id,
         ) {
             saveState = true
         }
