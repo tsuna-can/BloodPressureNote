@@ -1,4 +1,4 @@
-package com.example.bloodpressurenote.ui.screens.CalendarScreen
+package com.example.bloodpressurenote.ui.screens.calendar
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

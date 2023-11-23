@@ -38,6 +38,8 @@ import com.kizitonwose.calendar.core.OutDateStyle
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.nextMonth
 import com.kizitonwose.calendar.core.previousMonth
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -49,7 +51,7 @@ import java.util.Locale
 
 @Composable
 fun Calendar(
-    recordList: List<BloodPressureRecord>,
+    recordList: ImmutableList<BloodPressureRecord>,
     modifier: Modifier = Modifier,
 ) {
     val currentMonth = remember { YearMonth.now() }
@@ -80,7 +82,7 @@ fun Calendar(
         }
     }
 
-    Column {
+    Column(modifier = modifier) {
         CalendarTitle(
             modifier = Modifier
                 .padding(horizontal = 8.dp, vertical = 12.dp),
@@ -111,7 +113,7 @@ fun Calendar(
                     selection = clicked
                 }
             },
-            monthHeader = { DaysOfWeekTitle(daysOfWeek = daysOfWeek) },
+            monthHeader = { DaysOfWeekTitle(daysOfWeek = daysOfWeek.toImmutableList()) },
         )
 
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
@@ -124,11 +126,11 @@ fun Calendar(
 
 @Composable
 fun DaysOfWeekTitle(
-    daysOfWeek: List<DayOfWeek>,
+    daysOfWeek: ImmutableList<DayOfWeek>,
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
     ) {
         for ((index, dayOfWeek) in daysOfWeek.withIndex()) {
@@ -151,7 +153,7 @@ fun Day(
     onClick: (CalendarDay) -> Unit = {},
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .aspectRatio(0.7f)
             .border(
                 width = if (isSelected) 1.dp else 0.dp,
@@ -177,11 +179,12 @@ fun Day(
 @Composable
 fun SelectedDayRecord(
     bloodPressureRecord: BloodPressureRecord,
+    modifier: Modifier = Modifier,
 ) {
     val df = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(8.dp),
     ) {
@@ -253,7 +256,7 @@ private fun PreviewCalendar() {
                 heartRate = 60,
                 note = "memo",
             ),
-        ),
+        ).toImmutableList(),
     )
 }
 

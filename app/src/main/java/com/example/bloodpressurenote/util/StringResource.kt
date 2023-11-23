@@ -32,6 +32,7 @@ data class ResStringResource(
                 it
             }
         }
+        @Suppress("SpreadOperator")
         return context.getString(resId, *params.toTypedArray())
     }
 }

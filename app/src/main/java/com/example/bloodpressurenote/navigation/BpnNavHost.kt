@@ -6,9 +6,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.bloodpressurenote.ui.screens.CalendarScreen.CalendarScreen
-import com.example.bloodpressurenote.ui.screens.InputScreen.InputScreen
 import com.example.bloodpressurenote.ui.screens.StatisticsScreen
+import com.example.bloodpressurenote.ui.screens.calendar.CalendarScreen
+import com.example.bloodpressurenote.ui.screens.input.InputScreen
 
 @Composable
 fun BpnNavHost(

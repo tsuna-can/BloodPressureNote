@@ -1,4 +1,4 @@
-package com.example.bloodpressurenote.ui.screens.InputScreen
+package com.example.bloodpressurenote.ui.screens.input
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +35,7 @@ class InputScreenViewModel @Inject constructor(
                             systolicBloodPressure = value,
                         ),
                         systolicBPErrorMessage = validationResult,
+                        enableSave = enableSave(),
                     )
                 }
 
@@ -44,6 +45,7 @@ class InputScreenViewModel @Inject constructor(
                             diastolicBloodPressure = value,
                         ),
                         diastolicBPErrorMessage = validationResult,
+                        enableSave = enableSave(),
                     )
                 }
 
@@ -61,6 +63,7 @@ class InputScreenViewModel @Inject constructor(
                     allowBlank = true,
                     isNumeric = true,
                 ),
+                enableSave = enableSave(),
             )
     }
 
@@ -69,6 +72,7 @@ class InputScreenViewModel @Inject constructor(
             inputUiState.copy(
                 bloodPressureDetails = inputUiState.bloodPressureDetails.copy(note = value),
                 noteErrorMessage = validator(value = value, maxLength = 100, allowBlank = true),
+                enableSave = enableSave(),
             )
     }
 
@@ -78,6 +82,7 @@ class InputScreenViewModel @Inject constructor(
                 bloodPressureDetails = inputUiState.bloodPressureDetails.copy(
                     date = value ?: Date().time,
                 ),
+                enableSave = enableSave(),
             )
     }
 
@@ -87,6 +92,17 @@ class InputScreenViewModel @Inject constructor(
                 inputUiState.bloodPressureDetails.toBloodPressureRecord(),
             )
             refreshViewModel()
+        }
+    }
+
+    private fun enableSave(): Boolean {
+        return with(inputUiState) {
+            systolicBPErrorMessage == null &&
+                diastolicBPErrorMessage == null &&
+                heartRateErrorMessage == null &&
+                noteErrorMessage == null &&
+                bloodPressureDetails.systolicBloodPressure.isNotBlank() &&
+                bloodPressureDetails.diastolicBloodPressure.isNotBlank()
         }
     }
 

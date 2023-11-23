@@ -53,7 +53,7 @@ fun DatePickerComponent(
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,

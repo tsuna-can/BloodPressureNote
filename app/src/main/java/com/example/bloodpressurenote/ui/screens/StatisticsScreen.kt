@@ -17,7 +17,7 @@ fun StatisticsScreen(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
             .semantics { contentDescription = "Overview Screen" },

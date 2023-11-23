@@ -32,18 +32,19 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.bloodpressurenote.navigation.Destination
+import kotlinx.collections.immutable.ImmutableList
 import java.util.Locale
 
 @Composable
 fun BpnTabRow(
-    allScreens: List<Destination>,
+    allScreens: ImmutableList<Destination>,
     onTabSelected: (Destination) -> Unit,
     currentScreen: Destination,
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        Modifier
-            .height(TabHeight)
+        modifier = modifier
+            .height(TAB_HEIGHT)
             .fillMaxWidth(),
     ) {
         Row(
@@ -73,23 +74,23 @@ private fun BpnTab(
     modifier: Modifier = Modifier,
 ) {
     val color = MaterialTheme.colorScheme.onSurface
-    val durationMillis = if (selected) TabFadeInAnimationDuration else TabFadeOutAnimationDuration
+    val durationMillis = if (selected) TAB_FADE_IN_ANIMATION_DURATION else TAB_FADE_OUT_ANIMATION_DURATION
     val animSpec = remember {
         tween<Color>(
             durationMillis = durationMillis,
             easing = LinearEasing,
-            delayMillis = TabFadeInAnimationDelay,
+            delayMillis = TAB_FADE_IN_ANIMATION_DELAY,
         )
     }
     val tabTintColor by animateColorAsState(
-        targetValue = if (selected) color else color.copy(alpha = InactiveTabOpacity),
+        targetValue = if (selected) color else color.copy(alpha = INACTIVE_TAB_OPACITY),
         animationSpec = animSpec,
         label = "",
     )
     Row(
-        modifier = Modifier
+        modifier = modifier
             .animateContentSize()
-            .height(TabHeight)
+            .height(TAB_HEIGHT)
             .selectable(
                 selected = selected,
                 onClick = onSelected,
@@ -110,9 +111,8 @@ private fun BpnTab(
     }
 }
 
-private val TabHeight = 70.dp
-private const val InactiveTabOpacity = 0.40f
-
-private const val TabFadeInAnimationDuration = 50
-private const val TabFadeInAnimationDelay = 0
-private const val TabFadeOutAnimationDuration = 50
+private val TAB_HEIGHT = 70.dp
+private const val INACTIVE_TAB_OPACITY = 0.40f
+private const val TAB_FADE_IN_ANIMATION_DURATION = 50
+private const val TAB_FADE_IN_ANIMATION_DELAY = 0
+private const val TAB_FADE_OUT_ANIMATION_DURATION = 50

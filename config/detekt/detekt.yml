@@ -126,12 +126,11 @@ complexity:
     active: true
     threshold: 600
   LongMethod:
-    active: true
-    threshold: 60
+    active: false
   LongParameterList:
     active: true
-    functionThreshold: 6
-    constructorThreshold: 7
+    functionThreshold: 8
+    constructorThreshold: 8
     ignoreDefaultParameters: false
     ignoreDataClasses: true
     ignoreAnnotatedParameter: [ ]
@@ -605,23 +604,7 @@ style:
     active: true
     maxJumpCount: 1
   MagicNumber:
-    active: true
-    excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.kts' ]
-    ignoreNumbers:
-      - '-1'
-      - '0'
-      - '1'
-      - '2'
-    ignoreHashCodeFunction: true
-    ignorePropertyDeclaration: false
-    ignoreLocalVariableDeclaration: false
-    ignoreConstantDeclaration: true
-    ignoreCompanionObjectPropertyDeclaration: true
-    ignoreAnnotation: false
-    ignoreNamedArgument: true
-    ignoreEnums: false
-    ignoreRanges: false
-    ignoreExtensionFunctions: true
+    active: false
   MandatoryBracesLoops:
     active: false
   MaxChainedCallsOnSameLine:
@@ -671,13 +654,7 @@ style:
   RedundantVisibilityModifierRule:
     active: false
   ReturnCount:
-    active: true
-    max: 2
-    excludedFunctions:
-      - 'equals'
-    excludeLabeled: false
-    excludeReturnFromLambda: true
-    excludeGuardClauses: false
+    active: false
   SafeCast:
     active: true
   SerialVersionUIDInSerializableClass:

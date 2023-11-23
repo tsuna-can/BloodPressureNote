@@ -60,6 +60,7 @@ fun BloodPressureNote(
                     currentScreen = currentScreen,
                 )
             },
+            modifier = modifier,
         ) { innerPadding ->
             BpnNavHost(
                 navController = navController,
