@@ -1,32 +1,31 @@
 package com.example.bloodpressurenote.navigation
 
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.bloodpressurenote.ui.screens.CalendarScreen.CalendarScreen
-import com.example.bloodpressurenote.ui.screens.InputScreen.InputScreen
 import com.example.bloodpressurenote.ui.screens.StatisticsScreen
+import com.example.bloodpressurenote.ui.screens.calendar.CalendarScreen
+import com.example.bloodpressurenote.ui.screens.input.InputScreen
 
 @Composable
 fun BpnNavHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     NavHost(
         navController = navController,
         startDestination = Input.route,
-        modifier = modifier
+        modifier = modifier,
     ) {
         composable(route = Input.route) {
             InputScreen()
         }
         composable(route = Statistics.route) {
             StatisticsScreen(
-                message = "This is message from NavHost"
+                message = "This is message from NavHost",
             )
         }
         composable(route = Calendar.route) {
@@ -41,7 +40,7 @@ fun NavHostController.navigateSingleTopTo(route: String) =
         // avoid building up a large stack of destinations
         // on the back stack as users select items
         popUpTo(
-            this@navigateSingleTopTo.graph.findStartDestination().id
+            this@navigateSingleTopTo.graph.findStartDestination().id,
         ) {
             saveState = true
         }

@@ -21,7 +21,7 @@ object DatabaseModule {
         return Room.databaseBuilder(
             appContext,
             BloodPressureNoteDatabase::class.java,
-            "blood_pressure_note_database.db"
+            "blood_pressure_note_database.db",
         ).build()
     }
 

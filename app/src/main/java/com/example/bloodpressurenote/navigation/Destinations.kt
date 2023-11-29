@@ -5,6 +5,8 @@ import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Equalizer
 import androidx.compose.ui.graphics.vector.ImageVector
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 interface Destination {
     val icon: ImageVector
@@ -26,6 +28,4 @@ object Calendar : Destination {
     override val route = "calendar"
 }
 
-
-// Screens to be displayed in the top RallyTabRow
-val tabRowScreens = listOf(Input, Calendar, Statistics)
+val tabRowScreens: ImmutableList<Destination> = persistentListOf(Input, Statistics, Calendar)

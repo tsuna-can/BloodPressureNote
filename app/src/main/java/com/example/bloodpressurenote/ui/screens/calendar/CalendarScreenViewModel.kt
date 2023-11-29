@@ -1,4 +1,4 @@
-package com.example.bloodpressurenote.ui.screens.CalendarScreen
+package com.example.bloodpressurenote.ui.screens.calendar
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CalendarScreenViewModel @Inject constructor(
-    private val bloodPressureRecordsRepository: BloodPressureRecordsRepository
+    private val bloodPressureRecordsRepository: BloodPressureRecordsRepository,
 ) : ViewModel() {
 
     val homeUiState: StateFlow<CalendarUiState> =
@@ -22,13 +22,12 @@ class CalendarScreenViewModel @Inject constructor(
             .stateIn(
                 viewModelScope,
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-                CalendarUiState()
+                CalendarUiState(),
             )
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
-
 }
 
 data class CalendarUiState(val recordList: List<BloodPressureRecord> = listOf())

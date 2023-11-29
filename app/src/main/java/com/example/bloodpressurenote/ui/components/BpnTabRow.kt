@@ -32,32 +32,33 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.bloodpressurenote.navigation.Destination
+import kotlinx.collections.immutable.ImmutableList
 import java.util.Locale
 
 @Composable
 fun BpnTabRow(
-    allScreens: List<Destination>,
+    allScreens: ImmutableList<Destination>,
     onTabSelected: (Destination) -> Unit,
     currentScreen: Destination,
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        Modifier
-            .height(TabHeight)
-            .fillMaxWidth()
+        modifier = modifier
+            .height(TAB_HEIGHT)
+            .fillMaxWidth(),
     ) {
         Row(
             Modifier
                 .background(color = MaterialTheme.colorScheme.tertiary)
                 .selectableGroup(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             allScreens.forEach { screen ->
                 BpnTab(
                     text = screen.route,
                     icon = screen.icon,
                     onSelected = { onTabSelected(screen) },
-                    selected = currentScreen == screen
+                    selected = currentScreen == screen,
                 )
             }
         }
@@ -73,22 +74,23 @@ private fun BpnTab(
     modifier: Modifier = Modifier,
 ) {
     val color = MaterialTheme.colorScheme.onSurface
-    val durationMillis = if (selected) TabFadeInAnimationDuration else TabFadeOutAnimationDuration
+    val durationMillis = if (selected) TAB_FADE_IN_ANIMATION_DURATION else TAB_FADE_OUT_ANIMATION_DURATION
     val animSpec = remember {
         tween<Color>(
             durationMillis = durationMillis,
             easing = LinearEasing,
-            delayMillis = TabFadeInAnimationDelay
+            delayMillis = TAB_FADE_IN_ANIMATION_DELAY,
         )
     }
     val tabTintColor by animateColorAsState(
-        targetValue = if (selected) color else color.copy(alpha = InactiveTabOpacity),
-        animationSpec = animSpec, label = ""
+        targetValue = if (selected) color else color.copy(alpha = INACTIVE_TAB_OPACITY),
+        animationSpec = animSpec,
+        label = "",
     )
     Row(
-        modifier = Modifier
+        modifier = modifier
             .animateContentSize()
-            .height(TabHeight)
+            .height(TAB_HEIGHT)
             .selectable(
                 selected = selected,
                 onClick = onSelected,
@@ -97,11 +99,11 @@ private fun BpnTab(
                 indication = rememberRipple(
                     bounded = false,
                     radius = Dp.Unspecified,
-                    color = Color.Unspecified
-                )
+                    color = Color.Unspecified,
+                ),
             )
             .clearAndSetSemantics { contentDescription = text },
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(imageVector = icon, contentDescription = text, tint = tabTintColor)
         Spacer(Modifier.width(12.dp))
@@ -109,9 +111,8 @@ private fun BpnTab(
     }
 }
 
-private val TabHeight = 70.dp
-private const val InactiveTabOpacity = 0.40f
-
-private const val TabFadeInAnimationDuration = 50
-private const val TabFadeInAnimationDelay = 0
-private const val TabFadeOutAnimationDuration = 50
+private val TAB_HEIGHT = 70.dp
+private const val INACTIVE_TAB_OPACITY = 0.40f
+private const val TAB_FADE_IN_ANIMATION_DURATION = 50
+private const val TAB_FADE_IN_ANIMATION_DELAY = 0
+private const val TAB_FADE_OUT_ANIMATION_DURATION = 50

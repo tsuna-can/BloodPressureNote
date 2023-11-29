@@ -37,42 +37,41 @@ import java.time.format.DateTimeFormatter
 fun DatePickerComponent(
     selectedDateMillis: Long,
     modifier: Modifier = Modifier,
-    onChangeValue: (Long?) -> Unit = {}
+    onChangeValue: (Long?) -> Unit = {},
 ) {
     var showPicker by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = selectedDateMillis ?: Instant.now().toEpochMilli()
+        initialSelectedDateMillis = selectedDateMillis ?: Instant.now().toEpochMilli(),
     )
     if (showPicker) {
         Material3DatePicker(
             datePickerState = datePickerState,
             closePicker = { showPicker = false },
-            onChangeValue = onChangeValue
+            onChangeValue = onChangeValue,
         )
     }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                shape = RoundedCornerShape(5.dp)
+                shape = RoundedCornerShape(5.dp),
             )
             .padding(16.dp)
             .fillMaxWidth()
-            .clickable { showPicker = true }
+            .clickable { showPicker = true },
     ) {
-
         Icon(
             imageVector = Icons.Default.CalendarMonth,
-            contentDescription = stringResource(id = R.string.calendar)
+            contentDescription = stringResource(id = R.string.calendar),
         )
 
         Text(
             text = dateFormatter(datePickerState.selectedDateMillis),
             fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-            modifier = Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(start = 8.dp),
         )
     }
 }
@@ -84,7 +83,7 @@ fun Material3DatePicker(
     datePickerState: DatePickerState,
     closePicker: () -> Unit,
     modifier: Modifier = Modifier,
-    onChangeValue: (Long?) -> Unit = {}
+    onChangeValue: (Long?) -> Unit = {},
 ) {
     DatePickerDialog(
         onDismissRequest = {
@@ -96,7 +95,7 @@ fun Material3DatePicker(
                     onChangeValue(datePickerState.selectedDateMillis)
                     datePickerState.setSelection(datePickerState.selectedDateMillis)
                     closePicker()
-                }
+                },
             ) {
                 Text(stringResource(id = R.string.ok))
             }
@@ -105,7 +104,7 @@ fun Material3DatePicker(
             TextButton(
                 onClick = {
                     closePicker()
-                }
+                },
             ) {
                 Text(stringResource(id = R.string.cancel))
             }
@@ -127,7 +126,6 @@ fun dateFormatter(milliseconds: Long?): String {
         return localDateTime.format(formatter)
     }
 }
-
 
 @Suppress("UnusedPrivateMember")
 @Composable

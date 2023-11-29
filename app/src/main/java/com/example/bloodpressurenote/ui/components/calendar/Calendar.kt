@@ -27,7 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.bloodpressurenote.R
 import com.example.bloodpressurenote.data.BloodPressureRecord
-import com.example.bloodpressurenote.ui.theme.Black80
 import com.example.bloodpressurenote.ui.theme.Gray80
 import com.example.bloodpressurenote.util.getDayOfWeekTextColor
 import com.example.bloodpressurenote.util.rememberFirstMostVisibleMonth
@@ -39,6 +38,8 @@ import com.kizitonwose.calendar.core.OutDateStyle
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.nextMonth
 import com.kizitonwose.calendar.core.previousMonth
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -50,7 +51,7 @@ import java.util.Locale
 
 @Composable
 fun Calendar(
-    recordList: List<BloodPressureRecord>,
+    recordList: ImmutableList<BloodPressureRecord>,
     modifier: Modifier = Modifier,
 ) {
     val currentMonth = remember { YearMonth.now() }
@@ -62,7 +63,7 @@ fun Calendar(
         endMonth = endMonth,
         firstVisibleMonth = currentMonth,
         firstDayOfWeek = daysOfWeek.first(),
-        outDateStyle = OutDateStyle.EndOfGrid
+        outDateStyle = OutDateStyle.EndOfGrid,
     )
     val coroutineScope = rememberCoroutineScope()
     val visibleMonth = rememberFirstMostVisibleMonth(state)
@@ -81,7 +82,7 @@ fun Calendar(
         }
     }
 
-    Column() {
+    Column(modifier = modifier) {
         CalendarTitle(
             modifier = Modifier
                 .padding(horizontal = 8.dp, vertical = 12.dp),
@@ -107,12 +108,12 @@ fun Calendar(
                 Day(
                     day = day,
                     isSelected = selection == day,
-                    bloodPressureRecord = record
+                    bloodPressureRecord = record,
                 ) { clicked ->
                     selection = clicked
                 }
             },
-            monthHeader = { DaysOfWeekTitle(daysOfWeek = daysOfWeek) }
+            monthHeader = { DaysOfWeekTitle(daysOfWeek = daysOfWeek.toImmutableList()) },
         )
 
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
@@ -125,19 +126,19 @@ fun Calendar(
 
 @Composable
 fun DaysOfWeekTitle(
-    daysOfWeek: List<DayOfWeek>,
+    daysOfWeek: ImmutableList<DayOfWeek>,
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth(),
     ) {
         for ((index, dayOfWeek) in daysOfWeek.withIndex()) {
             Text(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center,
                 text = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
-                color = getDayOfWeekTextColor(index + 1)
+                color = getDayOfWeekTextColor(index + 1),
             )
         }
     }
@@ -149,10 +150,10 @@ fun Day(
     bloodPressureRecord: BloodPressureRecord?,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
-    onClick: (CalendarDay) -> Unit = {}
+    onClick: (CalendarDay) -> Unit = {},
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .aspectRatio(0.7f)
             .border(
                 width = if (isSelected) 1.dp else 0.dp,
@@ -166,7 +167,7 @@ fun Day(
     ) {
         Text(
             text = day.date.dayOfMonth.toString(),
-            color = if (day.position == DayPosition.MonthDate) Color.Black else Color.Gray
+            color = if (day.position == DayPosition.MonthDate) Color.Black else Color.Gray,
         )
         if (bloodPressureRecord != null) {
             Text(text = bloodPressureRecord.systolicBloodPressure.toString())
@@ -177,56 +178,57 @@ fun Day(
 
 @Composable
 fun SelectedDayRecord(
-    bloodPressureRecord: BloodPressureRecord
+    bloodPressureRecord: BloodPressureRecord,
+    modifier: Modifier = Modifier,
 ) {
     val df = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(8.dp),
     ) {
         Text(text = df.format(bloodPressureRecord.createdAt))
-        Row() {
+        Row {
             Text(
                 text = stringResource(id = R.string.systolic_blood_pressure),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(.7f)
+                    .weight(.7f),
             )
             Text(
                 text = bloodPressureRecord.systolicBloodPressure.toString(),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(.3f)
+                    .weight(.3f),
             )
         }
-        Row() {
+        Row {
             Text(
                 text = stringResource(id = R.string.diastolic_blood_pressure),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(.7f)
+                    .weight(.7f),
             )
             Text(
                 text = bloodPressureRecord.diastolicBloodPressure.toString(),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(.3f)
+                    .weight(.3f),
             )
         }
-        Row() {
+        Row {
             Text(
                 text = stringResource(id = R.string.heart_rate),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(.7f)
+                    .weight(.7f),
             )
             Text(
                 text = bloodPressureRecord.heartRate.toString(),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(.3f)
+                    .weight(.3f),
             )
         }
     }
@@ -245,19 +247,18 @@ private fun PreviewCalendar() {
                 diastolicBloodPressure = 80,
                 createdAt = today,
                 heartRate = 60,
-                note = "memo"
+                note = "memo",
             ),
             BloodPressureRecord(
                 systolicBloodPressure = 110,
                 diastolicBloodPressure = 60,
                 createdAt = Date(today.time + (1000 * 60 * 60 * 24)),
                 heartRate = 60,
-                note = "memo"
-            )
-        )
+                note = "memo",
+            ),
+        ).toImmutableList(),
     )
 }
-
 
 @Suppress("UnusedPrivateMember")
 @Preview
@@ -271,7 +272,7 @@ private fun PreviewSelectedDayRecord() {
             diastolicBloodPressure = 80,
             createdAt = today,
             heartRate = 60,
-            note = "memo"
-        )
+            note = "memo",
+        ),
     )
 }
