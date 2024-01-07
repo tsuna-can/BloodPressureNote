@@ -1,6 +1,5 @@
 package com.example.bloodpressurenote.ui.components.calendar
 
-import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -68,8 +67,7 @@ fun Calendar(
     val coroutineScope = rememberCoroutineScope()
     val visibleMonth = rememberFirstMostVisibleMonth(state)
     var selection by remember { mutableStateOf<CalendarDay?>(null) }
-    val recordsInSelectedDate = remember {
-        Log.d("Calendar", "recordsInSelectedDate")
+    val recordsInSelectedDate by remember(recordList) {
         derivedStateOf {
             val date = selection?.date
             if (date != null) {
@@ -117,7 +115,7 @@ fun Calendar(
         )
 
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(items = recordsInSelectedDate.value) { record ->
+            items(items = recordsInSelectedDate) { record ->
                 SelectedDayRecord(bloodPressureRecord = record)
             }
         }
