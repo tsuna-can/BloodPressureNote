@@ -5,6 +5,7 @@ buildscript {
         set("hilt_version", "2.44")
     }
     dependencies {
+        classpath("com.android.tools.build:gradle:8.1.4")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${rootProject.extra["hilt_version"]}")
     }
 }
