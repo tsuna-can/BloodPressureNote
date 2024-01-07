@@ -5,8 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.bloodpressurenote.R
 import com.example.bloodpressurenote.data.BloodPressureRecord
 import com.example.bloodpressurenote.data.BloodPressureRecordsRepository
+import com.example.bloodpressurenote.util.ResStringResource
 import com.example.bloodpressurenote.util.StringResource
 import com.example.bloodpressurenote.util.validator
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -92,6 +94,7 @@ class InputScreenViewModel @Inject constructor(
                 inputUiState.bloodPressureDetails.toBloodPressureRecord(),
             )
             refreshViewModel()
+            showSnackbar(ResStringResource.create(R.string.save_success))
         }
     }
 
@@ -106,8 +109,18 @@ class InputScreenViewModel @Inject constructor(
         }
     }
 
+    private fun showSnackbar(message: StringResource) {
+        val newEvents = inputUiState.events + Event.ShowSnackbar(message)
+        inputUiState = inputUiState.copy(events = newEvents)
+    }
+
     private fun refreshViewModel() {
         inputUiState = InputUiState()
+    }
+
+    fun consumeEvent(event: Event) {
+        val newEvents = inputUiState.events.filterNot { it == event }
+        inputUiState = inputUiState.copy(events = newEvents)
     }
 }
 
@@ -118,6 +131,7 @@ data class InputUiState(
     val heartRateErrorMessage: StringResource? = null,
     val noteErrorMessage: StringResource? = null,
     val enableSave: Boolean = false,
+    val events: List<Event> = emptyList(),
 )
 
 data class BloodPressureDetails(
@@ -128,6 +142,10 @@ data class BloodPressureDetails(
     val note: String = "",
     val date: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC).times(1000),
 )
+
+sealed interface Event {
+    data class ShowSnackbar(val message: StringResource) : Event
+}
 
 fun BloodPressureDetails.toBloodPressureRecord(): BloodPressureRecord = BloodPressureRecord(
     id = id,

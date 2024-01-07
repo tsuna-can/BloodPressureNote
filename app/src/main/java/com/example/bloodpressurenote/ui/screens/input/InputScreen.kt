@@ -8,6 +8,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,15 +40,37 @@ fun InputScreen(
     modifier: Modifier = Modifier,
     viewModel: InputScreenViewModel = hiltViewModel(),
 ) {
-    InputScreen(
-        viewModel.inputUiState,
-        viewModel::updateBloodPressure,
-        viewModel::updateHeartRate,
-        viewModel::updateNote,
-        viewModel::updateDate,
-        viewModel::saveItem,
-        modifier = modifier,
-    )
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    viewModel.inputUiState.events.firstOrNull()?.let { event ->
+        when (event) {
+            is Event.ShowSnackbar -> {
+                val message = event.message.getString(LocalContext.current)
+                LaunchedEffect(event) {
+                    snackbarHostState.showSnackbar(message)
+                    viewModel.consumeEvent(event)
+                }
+            }
+        }
+    }
+
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+            )
+        },
+    ) {
+        InputScreen(
+            viewModel.inputUiState,
+            viewModel::updateBloodPressure,
+            viewModel::updateHeartRate,
+            viewModel::updateNote,
+            viewModel::updateDate,
+            viewModel::saveItem,
+            modifier = modifier.padding(it),
+        )
+    }
 }
 
 @Composable
