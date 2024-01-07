@@ -1,14 +1,11 @@
 # Blood Pressure Note
+Android application for blood pressure note.
 
 ## Getting Started
 
 ### Install pre-commit
 
 - [pre-commit](https://pre-commit.com/)
-
-### Install detekt cli
-
-- [detekt cli](https://detekt.dev/docs/gettingstarted/cli/)
 
 ## Linter
 
