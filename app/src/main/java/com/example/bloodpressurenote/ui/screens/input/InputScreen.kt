@@ -1,5 +1,6 @@
 package com.example.bloodpressurenote.ui.screens.input
 
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -64,6 +66,11 @@ fun InputScreen(
         modifier = modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
             .semantics { contentDescription = "Overview Screen" },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -139,7 +146,10 @@ fun InputScreen(
         DatePickerComponent(bloodPressureDetails.date, onChangeValue = updateDate)
 
         Button(
-            onClick = onSave,
+            onClick = {
+                focusManager.clearFocus()
+                onSave()
+            },
             modifier = Modifier.padding(16.dp),
             enabled = uiState.enableSave,
         ) {
