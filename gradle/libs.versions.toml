@@ -1,18 +1,18 @@
 [versions]
 androidxCore = "1.12.0"
-androidxLifeCycle = "2.6.2"
+androidxLifeCycle = "2.7.0"
 androidxActivity = "1.8.2"
-androidxComposeBom = "2023.03.00"
+androidxComposeBom = "2023.10.01"
 detekt = "1.23.3"
 detektFormatting = "1.23.4"
 detektComposeRules = "0.3.3"
 espressoCore = "3.5.1"
-gradle = "8.1.4"
+gradle = "8.2.1"
 material3 = "1.1.2"
-androidxNavigation = "2.5.3"
-androidxRoom = "2.5.2"
+androidxNavigation = "2.7.6"
+androidxRoom = "2.6.0-beta01"
 hilt = "2.44"
-hiltNavigationCompose = "1.0.0-alpha03"
+hiltNavigationCompose = "1.1.0"
 junit = "4.13.2"
 androidxTestExtJunit = "1.1.5"
 uiTooling = "1.5.4"
@@ -48,7 +48,7 @@ detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", 
 detekt-compose-rules = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektComposeRules" }
 
 [plugins]
-android = { id = "com.android.application", version = "8.1.1" }
+android = { id = "com.android.application", version = "8.2.1" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version = "1.8.21" }
 ksp = { id = "com.google.devtools.ksp", version = "1.8.21-1.0.11" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
