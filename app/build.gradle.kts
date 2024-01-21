@@ -77,7 +77,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigationCompose)
     implementation(libs.hilt.android)
     implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6")
-    implementation("com.kizitonwose.calendar:compose:2.4.0")
+    implementation("com.kizitonwose.calendar:compose:2.4.1")
     ksp(libs.androidx.room.compiler)
     kapt(libs.hilt.android.compiler)
 
