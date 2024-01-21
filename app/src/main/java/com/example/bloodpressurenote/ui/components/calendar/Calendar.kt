@@ -79,6 +79,13 @@ fun Calendar(
             }
         }
     }
+    val recordExistsDateList by remember(recordList) {
+        derivedStateOf {
+            recordList.map {
+                it.createdAt.toInstant().atZone(ZoneOffset.UTC).toLocalDate()
+            }
+        }
+    }
 
     Column(modifier = modifier) {
         CalendarTitle(
@@ -100,13 +107,10 @@ fun Calendar(
         HorizontalCalendar(
             state = state,
             dayContent = { day ->
-                val record = recordList.find {
-                    it.createdAt.toInstant().atZone(ZoneOffset.UTC).toLocalDate() == day.date
-                }
                 Day(
                     day = day,
                     isSelected = selection == day,
-                    bloodPressureRecord = record,
+                    recordExists = recordExistsDateList.contains(day.date),
                 ) { clicked ->
                     selection = clicked
                 }
@@ -145,7 +149,7 @@ fun DaysOfWeekTitle(
 @Composable
 fun Day(
     day: CalendarDay,
-    bloodPressureRecord: BloodPressureRecord?,
+    recordExists: Boolean,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     onClick: (CalendarDay) -> Unit = {},
@@ -167,9 +171,8 @@ fun Day(
             text = day.date.dayOfMonth.toString(),
             color = if (day.position == DayPosition.MonthDate) Color.Black else Color.Gray,
         )
-        if (bloodPressureRecord != null) {
-            Text(text = bloodPressureRecord.systolicBloodPressure.toString())
-            Text(text = bloodPressureRecord.diastolicBloodPressure.toString())
+        if (recordExists) {
+            Text(text = "・")
         }
     }
 }

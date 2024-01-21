@@ -1,5 +1,5 @@
 # Blood Pressure Note
-Android application for blood pressure note.
+Android app to record blood pressure
 
 ## Getting Started
 
