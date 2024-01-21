@@ -1,17 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    extra.apply {
-        set("room_version", "2.5.2")
-        set("hilt_version", "2.44")
-    }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.1.4")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:${rootProject.extra["hilt_version"]}")
+        classpath(libs.gradle)
+        classpath(libs.hilt.android.gradle.plugin)
     }
 }
 
 plugins {
-    id("com.android.application") version "8.1.1" apply false
-    id("org.jetbrains.kotlin.android") version "1.8.21" apply false
-    id("io.gitlab.arturbosch.detekt") version "1.23.3"
+    alias(libs.plugins.android) apply false
+    alias(libs.plugins.kotlinAndroid) apply false
+    alias(libs.plugins.detekt)
 }
