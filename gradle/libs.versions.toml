@@ -3,6 +3,7 @@ androidxCore = "1.12.0"
 androidxLifeCycle = "2.6.2"
 androidxActivity = "1.8.2"
 androidxComposeBom = "2023.03.00"
+detekt = "1.23.3"
 detektFormatting = "1.23.4"
 detektComposeRules = "0.3.3"
 espressoCore = "3.5.1"
@@ -45,3 +46,9 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-testManifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "uiTestManifest" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detektFormatting" }
 detekt-compose-rules = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektComposeRules" }
+
+[plugins]
+android = { id = "com.android.application", version = "8.1.1" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version = "1.8.21" }
+ksp = { id = "com.google.devtools.ksp", version = "1.8.21-1.0.11" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

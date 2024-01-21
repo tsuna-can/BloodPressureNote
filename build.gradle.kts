@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    id("com.android.application") version "8.1.1" apply false
-    id("org.jetbrains.kotlin.android") version "1.8.21" apply false
-    id("io.gitlab.arturbosch.detekt") version "1.23.3"
+    alias(libs.plugins.android) apply false
+    alias(libs.plugins.kotlinAndroid) apply false
+    alias(libs.plugins.detekt)
 }
