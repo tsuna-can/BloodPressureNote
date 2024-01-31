@@ -1,6 +1,7 @@
 package com.example.bloodpressurenote.ui.screens.statistics
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -30,8 +31,26 @@ fun StatisticsScreen(
             .semantics { contentDescription = "Overview Screen" },
     ) {
         Text(text = stringResource(id = R.string.average))
-        Text(text = statisticsUiState.systolicBloodPressure.toString())
-        Text(text = statisticsUiState.diastolicBloodPressure.toString())
-        Text(text = statisticsUiState.heartRate.toString())
+        Row(
+            modifier = Modifier
+                .padding(16.dp),
+        ) {
+            Text(text = stringResource(id = R.string.systolic_blood_pressure))
+            Text(text = statisticsUiState.systolicBloodPressure.toString())
+        }
+        Row(
+            modifier = Modifier
+                .padding(16.dp),
+        ) {
+            Text(text = stringResource(id = R.string.diastolic_blood_pressure))
+            Text(text = statisticsUiState.diastolicBloodPressure.toString())
+        }
+        Row(
+            modifier = Modifier
+                .padding(16.dp),
+        ) {
+            Text(text = stringResource(id = R.string.heart_rate))
+            Text(text = statisticsUiState.heartRate.toString())
+        }
     }
 }

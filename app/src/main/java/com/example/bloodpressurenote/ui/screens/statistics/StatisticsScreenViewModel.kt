@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,13 +16,15 @@ class StatisticsScreenViewModel @Inject constructor(
     private val bloodPressureRecordsRepository: BloodPressureRecordsRepository,
 ) : ViewModel() {
 
+    private val df = DecimalFormat("#.#")
+
     val statisticsUiState: StateFlow<StatisticsUiState> =
         bloodPressureRecordsRepository.getAverageRecord()
             .map {
                 StatisticsUiState(
-                    systolicBloodPressure = it.systolicBloodPressure,
-                    diastolicBloodPressure = it.diastolicBloodPressure,
-                    heartRate = it.heartRate,
+                    systolicBloodPressure = df.format(it.systolicBloodPressure).toString(),
+                    diastolicBloodPressure = df.format(it.diastolicBloodPressure).toString(),
+                    heartRate = df.format(it.heartRate).toString(),
                 )
             }
             .stateIn(
@@ -32,7 +35,7 @@ class StatisticsScreenViewModel @Inject constructor(
 }
 
 data class StatisticsUiState(
-    val systolicBloodPressure: Double = 0.0,
-    val diastolicBloodPressure: Double = 0.0,
-    val heartRate: Double = 0.0,
+    val systolicBloodPressure: String = "",
+    val diastolicBloodPressure: String = "",
+    val heartRate: String = "",
 )
