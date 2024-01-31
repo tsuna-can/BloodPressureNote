@@ -1,5 +1,6 @@
 package com.example.bloodpressurenote.data
 
+import com.example.bloodpressurenote.data.entity.AverageEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -30,4 +31,6 @@ interface BloodPressureRecordsRepository {
      * Update item in the data source
      */
     suspend fun updateItem(bloodPressureRecord: BloodPressureRecord)
+
+    fun getAverageRecord(): Flow<AverageEntity>
 }

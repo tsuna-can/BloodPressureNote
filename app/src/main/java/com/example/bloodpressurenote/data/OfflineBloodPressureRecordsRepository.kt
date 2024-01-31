@@ -1,5 +1,7 @@
 package com.example.bloodpressurenote.data
 
+import com.example.bloodpressurenote.data.dao.BloodPressureRecordDao
+import com.example.bloodpressurenote.data.entity.AverageEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -20,4 +22,8 @@ class OfflineBloodPressureRecordsRepository @Inject constructor(
 
     override suspend fun updateItem(bloodPressureRecord: BloodPressureRecord) =
         bloodPressureRecordDao.update(bloodPressureRecord)
+
+    override fun getAverageRecord(): Flow<AverageEntity> {
+        return bloodPressureRecordDao.getAverageRecord()
+    }
 }
