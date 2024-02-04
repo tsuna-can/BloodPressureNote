@@ -10,12 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bloodpressurenote.R
+import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
+import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
+import com.patrykandpatrick.vico.compose.chart.Chart
+import com.patrykandpatrick.vico.compose.chart.line.lineChart
+import com.patrykandpatrick.vico.core.entry.entriesOf
+import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @Composable
 fun StatisticsScreen(
@@ -23,12 +27,14 @@ fun StatisticsScreen(
     viewModel: StatisticsScreenViewModel = hiltViewModel(),
 ) {
     val statisticsUiState by viewModel.statisticsUiState.collectAsStateWithLifecycle()
+    val systolicBloodPressureArray = statisticsUiState.systolicBloodPressureList.toTypedArray()
+    val diastolicBloodPressureArray = statisticsUiState.diastolicBloodPressureList.toTypedArray()
+    val chartEntryModel = entryModelOf(entriesOf(*systolicBloodPressureArray), entriesOf(*diastolicBloodPressureArray))
 
     Column(
         modifier = modifier
             .padding(16.dp)
-            .verticalScroll(rememberScrollState())
-            .semantics { contentDescription = "Overview Screen" },
+            .verticalScroll(rememberScrollState()),
     ) {
         Text(text = stringResource(id = R.string.average))
         Row(
@@ -52,5 +58,11 @@ fun StatisticsScreen(
             Text(text = stringResource(id = R.string.heart_rate))
             Text(text = statisticsUiState.heartRate.toString())
         }
+        Chart(
+            chart = lineChart(),
+            model = chartEntryModel,
+            startAxis = rememberStartAxis(),
+            bottomAxis = rememberBottomAxis(),
+        )
     }
 }

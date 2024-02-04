@@ -33,4 +33,6 @@ interface BloodPressureRecordsRepository {
     suspend fun updateItem(bloodPressureRecord: BloodPressureRecord)
 
     fun getAverageRecord(): Flow<AverageEntity>
+
+    fun getAllBloodPressure(): Flow<Pair<List<Int>, List<Int>>>
 }

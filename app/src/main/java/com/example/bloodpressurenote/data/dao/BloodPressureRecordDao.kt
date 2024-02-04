@@ -8,6 +8,8 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.bloodpressurenote.data.BloodPressureRecord
 import com.example.bloodpressurenote.data.entity.AverageEntity
+import com.example.bloodpressurenote.data.entity.DiastolicBloodPressureEntity
+import com.example.bloodpressurenote.data.entity.SystolicBloodPressureEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -29,6 +31,16 @@ interface BloodPressureRecordDao {
 
     @Delete
     suspend fun delete(bloodPressureRecord: BloodPressureRecord)
+
+    @Query(
+        "SELECT systolic_blood_pressure as systolicBloodPressure FROM blood_pressure_records ORDER BY created_at ASC",
+    )
+    fun getAllSystolicBloodPressure(): Flow<List<SystolicBloodPressureEntity>>
+
+    @Query(
+        "SELECT diastolic_blood_pressure as diastolicBloodPressure FROM blood_pressure_records ORDER BY created_at ASC",
+    )
+    fun getAllDiastolicBloodPressure(): Flow<List<DiastolicBloodPressureEntity>>
 
     @Query(
         "SELECT AVG(systolic_blood_pressure) as systolicBloodPressure, AVG(diastolic_blood_pressure) as diastolicBloodPressure, AVG(heart_rate) as heartRate FROM blood_pressure_records",
