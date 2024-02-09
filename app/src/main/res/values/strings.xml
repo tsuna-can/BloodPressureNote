@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Blood Pressure Note</string>
+    <string name="blood_pressure">Blood Pressure</string>
     <string name="systolic_blood_pressure">Systolic blood pressure</string>
     <string name="diastolic_blood_pressure">Diastolic blood pressure</string>
     <string name="heart_rate">Heart Rate</string>
@@ -15,4 +16,5 @@
     <string name="cancel">Cancel</string>
     <string name="calendar">Calendar</string>
     <string name="average">Average</string>
+    <string name="date">Date</string>
 </resources>
