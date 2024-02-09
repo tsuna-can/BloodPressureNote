@@ -3,6 +3,7 @@ package com.example.bloodpressurenote.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.bloodpressurenote.data.dao.BloodPressureRecordDao
 import com.example.bloodpressurenote.util.Converters
 
 /**

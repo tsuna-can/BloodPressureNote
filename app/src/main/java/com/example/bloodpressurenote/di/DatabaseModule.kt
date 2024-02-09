@@ -3,7 +3,7 @@ package com.example.bloodpressurenote.di
 import android.content.Context
 import androidx.room.Room
 import com.example.bloodpressurenote.data.BloodPressureNoteDatabase
-import com.example.bloodpressurenote.data.BloodPressureRecordDao
+import com.example.bloodpressurenote.data.dao.BloodPressureRecordDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

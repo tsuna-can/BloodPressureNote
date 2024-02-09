@@ -6,9 +6,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.bloodpressurenote.ui.screens.StatisticsScreen
 import com.example.bloodpressurenote.ui.screens.calendar.CalendarScreen
 import com.example.bloodpressurenote.ui.screens.input.InputScreen
+import com.example.bloodpressurenote.ui.screens.statistics.StatisticsScreen
 
 @Composable
 fun BpnNavHost(
@@ -24,9 +24,7 @@ fun BpnNavHost(
             InputScreen()
         }
         composable(route = Statistics.route) {
-            StatisticsScreen(
-                message = "This is message from NavHost",
-            )
+            StatisticsScreen()
         }
         composable(route = Calendar.route) {
             CalendarScreen()
