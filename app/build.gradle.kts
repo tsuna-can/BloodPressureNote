@@ -79,7 +79,7 @@ dependencies {
     implementation(libs.vico.compose)
     implementation(libs.vico.compose.m3)
     implementation(libs.vico.core)
-    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6")
+    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
     implementation("com.kizitonwose.calendar:compose:2.4.1")
     ksp(libs.androidx.room.compiler)
     kapt(libs.hilt.android.compiler)
