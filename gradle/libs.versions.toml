@@ -53,6 +53,6 @@ vico-core = { group = "com.patrykandpatrick.vico", name = "core", version.ref = 
 
 [plugins]
 android = { id = "com.android.application", version = "8.2.2" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version = "1.8.21" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version = "1.9.23" }
 ksp = { id = "com.google.devtools.ksp", version = "1.8.21-1.0.11" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
